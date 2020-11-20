@@ -15,3 +15,8 @@
 #define ORYX_CONFIGURATOR
 #define FIRMWARE_VERSION u8"OvWQr/KRpwL"
 #define RGB_MATRIX_STARTUP_SPD 60
+// These are defined in the base keyboard but I put em here for easy reference
+// #define VENDOR_ID       0xFEED
+//#define PRODUCT_ID      0xC6CF
+#define RAW_USAGE_PAGE 0xFF60
+#define RAW_USAGE_ID 0x61

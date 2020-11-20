@@ -3,6 +3,9 @@
 #include "muse.h"
 #endif
 #include "eeprom.h"
+#include "raw_hid.h"
+#include "print.h"
+#include "rgb_matrix.h"
 // #include "keymap_german.h"
 // #include "keymap_nordic.h"
 // #include "keymap_french.h"
@@ -287,4 +290,21 @@ bool music_mask_user(uint16_t keycode) {
 
 uint32_t layer_state_set_user(uint32_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    uint8_t *command_id = &(data[0]);
+    uint8_t *command_data = &(data[1]);
+    uprintf("raw hid recv! command_id: %u, command_data: %u\n",*command_id, *command_data);
+    raw_hid_send(data, length);
+    bool isEven = *command_id %2 == 0;
+    if(isEven) {
+        // red
+        uprintf("Setting key 0 to red");
+        rgb_matrix_set_color(0, 255,0,0);
+    } else {
+        // green
+        uprintf("Setting key 0 to green");
+        rgb_matrix_set_color(0, 0, 255, 0);
+    }
 }
